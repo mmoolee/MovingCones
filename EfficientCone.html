@@ -1,0 +1,195 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<meta http-equiv="Content-Language" content="zh-cn">
+
+<title>Efficient Cone Singularity Construction for Conformal Parameterizations</title>
+<style>
+<!--
+.thumbnailClass {
+	BORDER-RIGHT: white 0px outset; BORDER-TOP: white 0px outset; MARGIN: 0px 5px 0px 0px; BORDER-LEFT: white 0px outset; BORDER-BOTTOM: white 0px outset
+}
+.sectionClass {
+	BORDER-RIGHT: #286dc2 2px outset; PADDING-RIGHT: 0px; BORDER-TOP: #286dc2 2px outset; PADDING-LEFT: 0px; BACKGROUND: #286dc2; PADDING-BOTTOM: 0px; MARGIN: 0px; BORDER-LEFT: #286dc2 2px outset; PADDING-TOP: 0px; BORDER-BOTTOM: #286dc2 2px outset
+}
+.section2Class {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-WEIGHT: bold; FONT-SIZE: 110%; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: white; TEXT-INDENT: 0.1in; PADDING-TOP: 0px; FONT-FAMILY: helvetica
+}
+.abstractClassCol {
+	COLOR: teal
+}
+.hindsightClassCol {
+	COLOR: darkred
+}
+.abstractClass {
+	COLOR: teal
+}
+.hindsightClass {
+	COLOR: darkred
+}
+
+-->
+</style>
+</head>
+
+<body>
+
+<p align="center"><b><font face="Arial" size="6">Efficient Cone Singularity Construction for Conformal Parameterizations</font></b></p>
+<table width="800" border="0" align="center">
+	<tbody>
+		<tr><td align="center" colspan="3"><span lang="EN-US" style="font-size:14.0pt;font-family:Arial;">
+			Mo Li&nbsp;&nbsp;&nbsp;&nbsp;
+			
+		<a href="https://qingfang1208.github.io/">Qing Fang</a><span lang="EN-US" style="font-size:14.0pt;font-family:Arial;">&nbsp;&nbsp;&nbsp;&nbsp;
+			Zheng Zhang&nbsp;&nbsp;&nbsp;&nbsp;
+		</span><a href="http://staff.ustc.edu.cn/~lgliu/">Ligang Liu</a><span lang="EN-US" style="font-size:14.0pt;font-family:Arial;">&nbsp;&nbsp;&nbsp;&nbsp; 
+		</span><a href="https://ustc-gcl-f.github.io/">Xiao-Ming Fu</a><span lang="EN-US" style="font-size:14.0pt;font-family:Arial;">&nbsp;&nbsp;&nbsp;&nbsp; 
+		</span></td></tr>
+	<tr>
+		<td width="495" align="center">
+		<span style="font-size: 14.0pt; font-family: Arial,sans-serif">
+		<a href="http://www.ustc.edu.cn/">University of Science and Technology of China</a></span></td>
+	</tr>
+	</tbody></table>
+<p align="center"><font face="Arial" size="4"><i>ACM Transactions on Graphics 
+</i>(Proc. SIGGRAPH Asia), 42(6), 2023.</font> </p>
+<p align="center">&nbsp;</p>
+<table width="1195" border="2" align="center" bordercolor="#FFFFFF" id="table2" style="border-collapse: collapse">
+	<tbody><tr>
+		<td align="center" colspan="2">
+		<hr>
+		<img border="0" src="figure/gallery.png" width="1120" height="201.162"><p align="center">
+		<span lang="en-us"><i><span style="font-family: Arial,sans-serif">Figure 1</span></i></span><i><span lang="EN-US" style="font-family:Arial,sans-serif">: </span></i>
+		<span lang="en-us"><i><span style="font-family: Arial,sans-serif">We propose an efficient method to construct sparse cone singularities under distortion-bounded constraints for conformal parameterizations.</span></i></span></p><hr>&nbsp;
+	</td>
+	</tr>
+	<tr>
+		<td width="10%" align="center" bgcolor="#CCFFCC">
+		<p align="left"><font face="Arial" color="#008080" size="4">Abstract</font></p></td>
+		<td width="89%">
+		<p align="justify"><font face="Arial" size="4">
+			We propose an efficient method to construct sparse cone singularities under distortion-bounded constraints for conformal parameterizations. Central to our algorithm is using the technique of shape derivatives to move cones for distortion reduction without changing the number of cones. In particular, the supernodal sparse Cholesky update significantly accelerates this movement process. To satisfy the distortion-bounded constraint, we alternately move cones and add cones. The capability and feasibility of our approach are demonstrated over a data set containing 3885 models. Compared with the state-of-the-art method, we achieve an average acceleration of 15 times and slightly fewer cones for the same amount of distortion
+			<br>
+			<br></font></p></td>
+	</tr>
+	<tr>
+		<td width="10%" align="left" bgcolor="#FFFFCC">
+		<font face="Arial" size="4" color="#008080">Keywords</font></td>
+		<td width="89%" align="left">
+			<br>
+		<span lang="EN-US" style="font-size:13.5pt;font-family:Arial;">
+			Conformal parameterizations, cone singularities, moving cones, adding cones, distortion-bounded constraints
+		<br></span><font face="Arial" size="4"><br></font></td>
+	</tr>
+	<tr>
+		<td width="10%" align="left" bgcolor="#CCFFCC">
+		<font face="Arial" size="4" color="#008080">Motivation</font></td>
+		<td width="89%" align="left">
+		<p align="justify"><font size="4">
+		<span style="font-family: Arial,sans-serif"><br>Constructing cone configurations, i.e., determining the numbers, placements, and angles of cones, is a fundamental task. Theoretically, the more cones are placed, the distortion is lower. Therefore, we focus on achieving a favorable tradeoff between the parameterization distortion and the number of cones. Moreover, we pay special attention to improving efficiency without affecting the quality as low efficiency often decrease the actual experiences. Undoubtedly, it is challenging to effectively and efficiently construct high-quality cone configurations due to combinatorial characteristics.
+		In this paper, we propose an effective and efficient method to construct sparse cone singularities with bounded distortion constraints for conformal parameterizations. We combine the greedy and the optimization-based methods by making full use of their advantages.<br><br></span></font></p>
+	</td></tr>
+	<tr>
+		<td width="10%" align="left" bgcolor="#FFFFCC">
+		<font face="Arial" size="4" color="#008080">Methods</font></td>
+		<td width="89%" align="left">
+		<span style="font-family: Arial,sans-serif">
+			<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif">
+				We reduce distortion by iteratively running an optimization-based phase to move cones on the surface and a greedy stage to add cones until the distortion-bounded constraint is satisfied.</span></p>
+			<p align="center">
+			<img border="0" src="figure/pipeline.png" width="1120" height="394.297"></p>
+			<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif"><i>
+				Figure 2:  Our framework. Given an input mesh, three cones are initialized at vertices with high absolute values of Gaussian curvatures. From up to down (blue arrows): the process of moving cones. From down to up (orange arrows): the process of adding cones. The algorithm terminates when the area distortion is smaller than the input distortion bound 0.1, and the result is on the far right.
+				</span><br><br></p>
+
+			<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif">
+				To efficiently move cones, we alternately optimize the cone angles and the cone locations. The cone angles are achieved by minimizing the area distortion and the cone locations are obtained by evaluating the negative gradient directions. To compute the directional derivatives, we represent the Dirac delta measure from a limit view. Then, the technique of shape derivatives can be directly used for evaluation. Besides, the supernodal sparse Cholesky update is adopted to significantly accelerate the moving process.</span></p>
+			<p align="center">
+			<img border="0" src="figure/conemove.png" width="1120" height="292.513"></p>
+			<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif"><i>
+				Figure 3:   An example of the moving cones process. 20 color-coded cones are randomly placed as the initialization on the far left. The text below each model indicates the iteration number and the area distortion. The curve on the far right plots the change of area distortion. The area distortion decreases monotonically, and the moving process converges by 50 iterations.
+				</span><br><br></p>
+
+			<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif">
+				To promote the satisfaction of the distortion-bounded constraint, a distortion-guided, region-oriented cone singularity addition strategy is developed to add an appropriate number of cone singularities.</span></p>
+			<p align="center">
+			<img border="0" src="figure/addcone.png" width="621.767" height="300"></p>
+			<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif"><i>
+				Figure 4:    An example of the process for adding cones. Left: the cones and the log conformal factors of all vertices V before the adding cones process. Right: the log conformal factors of Vfilter. We show the vertices V \ Vfilter in white. Six connected branches B1, ..., B6 with black boundaries are computed. The new cone is located at B5 with the highest region area distortion.
+
+				</span><br><br></p>
+		</td>
+			</tr>
+	<tr>
+		
+		<td width="10%" align="left" bgcolor="#CCFFCC">
+		<font face="Arial" size="4" color="#008080">Paper</font></td>
+		<td width="89%" align="left">
+		<font face="Arial" size="4">
+		<br>
+		<a href="https://rec.ustc.edu.cn/share/41be26c0-635e-11ee-8494-fdecfd3f6432">PDF</a></font><br><br></td>
+		
+		<!--
+		<td width="10%" align="left" bgcolor="#CCFFCC">
+		<font face="Arial" size="4" color="#008080">Paper</font></td>
+		<td width="89%" align="left">
+		<font face="Arial" size="4">
+		<br>
+		<a href="file/Paper.pdf">PDF</a> (261M)</font><br><br></td>
+		-->
+	</tr>
+	<tr>
+		<td width="10%" align="left" bgcolor="#FFFFCC">
+		<font face="Arial" size="4" color="#008080">Software</font></td>
+		<td width="89%" align="left">
+		<span style="font-size: 13.5pt; font-family: Arial,sans-serif">
+		<br>
+		<a href="https://rec.ustc.edu.cn/share/8af0e350-ec1e-11ed-ac79-0198d24bf998">Code</a><br><br></span></td>
+	</tr>
+
+	<tr>
+		<td width="10%" align="left" bgcolor="#CCFFCC">
+		<font face="Arial" size="4" color="#008080">Ack</font></td>
+		<td width="89%" align="left">
+		<p align="justify"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif">
+		<br>
+		We would like to thank the anonymous reviewers for their constructive suggestions and comments. This work is partially supported by the National Key R&D Program of China (2022YFB3303400), the National Natural Science Foundation of China (62272429, 62025207), the Major Project of Science and Technology of Anhui Province (202203a05020050) and the Xiaomi Young Talents Program. Xiao-Ming Fu is a USTC Tang Scholar. </span><font face="Arial" size="4"><br><br></font></p></td>
+	</tr>
+	<tr>
+		<td width="10%" align="left" bgcolor="#FFFFCC">
+		<font face="Arial" size="4" color="#008080">BibTex</font></td>
+		<td width="89%" align="left"><span lang="EN-US" style="font-size:13.5pt;font-family:Arial,sans-serif">
+			<br> @article {li2023efficientcone,<br>
+			&nbsp;&nbsp;&nbsp; title = {Efficient Cone Singularity Construction for Conformal Parameterizations}, <br>
+  			&nbsp;&nbsp;&nbsp; author = {Li, Mo and Fang, Qing and Zhang, Zheng and Liu, Ligang and Fu, Xiao-Ming}<br>
+  			&nbsp;&nbsp;&nbsp; journal = {ACM Transactions on Graphics},<br>
+			&nbsp;&nbsp;&nbsp; volume={42},<br>
+			&nbsp;&nbsp;&nbsp; number={6},<br>
+			&nbsp;&nbsp;&nbsp; pages={1--13},
+			&nbsp;&nbsp;&nbsp; <br>
+			&nbsp;&nbsp;&nbsp; year = {2023}<br>}</span>
+		</td>
+
+	</tr>
+	</tbody>
+	</table>
+	<p><span style="font-size: 13.5pt; font-family: Arial,sans-serif">
+	<a href="https://ustc-gcl-f.github.io/">Back to Homepage</a></span></p>
+	<hr>
+	<table width="1120" id="table1">
+	<tbody><tr>
+		<td>
+		<p align="justify"><i><font face="Verdana">Copyright and disclaimer: <br>
+		Copyright &#169; Xiao-Ming Fu<br>
+		The SOFTWARE provided at this page is provided "as is", without any 
+		guarantee made as to its suitability or fitness for any particular use. 
+		It may contain bugs, so use of this tool is at your own risk. We take no 
+		responsibility for any damage that may unintentionally be caused through 
+		its use.</font></i></p></td>
+	</tr>
+	<tr>
+	  <td align="center">  
+	  <!--#include file="counter.asp"-->
+	  </td>
+  </tr>
+</tbody></table>
+
+</body></html>
